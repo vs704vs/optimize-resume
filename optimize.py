@@ -12,7 +12,6 @@ import os
 import subprocess
 import sys
 import shutil
-import tempfile
 import re
 from groq import Groq
 from dotenv import load_dotenv
@@ -23,36 +22,28 @@ load_dotenv()
 
 MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"   # Best free model on Groq for instruction following
 
-SYSTEM_PROMPT = """You are an expert ATS resume optimizer and LaTeX engineer.
-Your job is to modify a LaTeX resume so it is tailored to a specific job description.
+SYSTEM_PROMPT = """You are an ATS resume optimizer and LaTeX engineer. Role is software related.Tailor the given LaTeX resume to the job description.
 
 STRICT RULES:
-1. Return ONLY the complete, valid, compilable LaTeX — no explanations, no markdown fences, no commentary.
-2. Preserve ALL LaTeX packages, document class, preamble, and overall structure exactly.
-3. Do NOT remove any bullet points, skills, or details from the original resume. You may rephrase or add, but never delete existing content.
-5. Mirror keywords, phrases, and terminology from the job description naturally in bullet points and skills.
-7. Reorder bullet points within each position to surface the most relevant ones first, based on the job description.
-8. Rephrase existing bullet points to use JD's language where a close match exists, but keep the original meaning and details intact.
-9. In the skills/technologies section, add any missing keywords from the JD that do not fit elsewhere, so that all JD keywords appear somewhere in the resume.
-10. You may add new bullet points or skills to ensure all JD keywords are present
-11. The resume should be enhanced, not reduced.
-12. Keep the resume length the same do not remove sections or points.
-13. The output must compile with pdflatex without errors.
+1. Output ONLY valid, compilable LaTeX — no prose, no markdown fences.
+2. Preserve all packages, document class, preamble, and structure exactly.
+3. Never delete content — only rephrase or add. Every original bullet and skill must remain.
+4. Mirror JD keywords/terminology naturally in bullets and skills sections.
+5. Reorder bullets within each role to lead with the most JD-relevant ones.
+6. Add any missing JD keywords into the skills section that don't fit elsewhere.
+7. The final resume must fit on a single page. You must be concise: aggressively reword, merge, or shorten points, but do not remove any original information. 
+8. Prioritize keeping the shortest bullets as one-liners. Only longer or keyword-heavy bullets may become two-liners, and never more than 3 in total.
+9. When rewording, merging, or adding to an existing bullet, ensure the new or modified content is contextually relevant and directly related to the original line. Only add or merge skills, technologies, or responsibilities that are similar or closely related to the original content. Do not add unrelated skills or technologies.
+10. Output must compile with pdflatex without errors.
 """
 
-USER_PROMPT_TEMPLATE = """Optimize the LaTeX resume below for the following job description.
+USER_PROMPT_TEMPLATE = """Optimize this LaTeX resume for the job description below.
 
-═══════════════════════════════
-JOB DESCRIPTION
-═══════════════════════════════
+JOB DESCRIPTION:
 {jd}
 
-═══════════════════════════════
-LATEX RESUME
-═══════════════════════════════
-{resume}
-
-Now return the fully optimized LaTeX resume. Remember: ONLY LaTeX code, nothing else."""
+LATEX RESUME:
+{resume}"""
 
 # ─── HELPERS ───────────────────────────────────────────────────────────────────
 
@@ -97,11 +88,12 @@ def compile_to_pdf_with_pdflatex(latex_source: str, output_name: str) -> str:
         try:
             result = subprocess.run([
                 pdflatex_path,
+                "-interaction=nonstopmode",
                 "resume.tex"
             ], cwd=tmpdir, capture_output=True, text=True, check=True)
             pdf_tmp = os.path.join(tmpdir, "resume.pdf")
             if not os.path.exists(pdf_tmp):
-                print("\n❌ Compilation failed. pdflatex output:\n")
+                print("\n❌ Compilation failed. pdflatex output (last 3000 chars):\n")
                 print(result.stdout[-3000:])
                 print(result.stderr[-3000:])
                 sys.exit(1)
@@ -109,9 +101,9 @@ def compile_to_pdf_with_pdflatex(latex_source: str, output_name: str) -> str:
             shutil.copy(pdf_tmp, final_pdf)
             return os.path.abspath(final_pdf)
         except subprocess.CalledProcessError as e:
-            print("Error during PDF generation:")
-            print(e.stdout)
-            print(e.stderr)
+            print("Error during PDF generation (pdflatex error):")
+            print(e.stdout[-3000:])
+            print(e.stderr[-3000:])
             sys.exit(1)
         except FileNotFoundError:
             print(f"Could not find pdflatex at {pdflatex_path}. Please check the path.")
@@ -123,54 +115,45 @@ def compile_to_pdf_with_pdflatex(latex_source: str, output_name: str) -> str:
 def main():
     # Paste your job description here as a string (multi-line allowed)
     JOB_DESCRIPTION = """
-    About This Role
 
-Wells Fargo is seeking a Software Engineer
+Job Description
 
-In This Role, You Will
+What You'll Do:
 
-Participate in low to moderately complex initiatives and projects associated with the technology domain, including installation, upgrades, and deployment efforts
-Identify opportunities for service quality and availability improvements within the technology domain environment
-Design, code, test, debug, and document for low to moderately complex projects and programs associated with technology domain, including upgrades and deployments
-Review and analyze technical assignments or challenges that are related to low to medium risk deliverables and that require research, evaluation, and selection of alternative technology domains
-Present recommendations for resolving issues or may escalate issues as needed to meet established service level agreements
-Exercise some independent judgment while also developing understanding of given technology domain in reference to security and compliance requirements
-Provide information to technology colleagues, internal partners, and stakeholders
+Develop and maintain applications using Golang or Java, following clean code and best software engineering practices.
+Design and implement scalable, reliable, and secure microservices architecture.
+Collaborate with engineering and product teams to refine and deliver technical solutions aligned with business needs.
+Leverage AWS services such as SQS, SNS, DynamoDB, S3, and EventBridge in day-to-day development.
+Use Terraform to provision, maintain, and evolve AWS infrastructure.
+Write unit and integration tests to ensure code quality and system robustness.
+Monitor application health and performance using observability tools (metrics, logs, alerts).
+Participate in code reviews and provide constructive feedback to peers.
+Contribute to architectural and technical discussions, supporting continuous improvement and innovation
+High-Impact Contributions: Regularly recognized for delivering high-quality, impactful technical solutions within their team and across collectives. Coding Standards & Best Practices: Actively enables other engineers to elevate coding standards and deepen awareness of best practices, especially around non-functional requirements. Technical Leadership: Consistently leads their squad to successful technical outcomes, ensuring sound engineering decisions that balance technical debt, system design, reliability, observability, and business needs. Product Awareness & Planning: Demonstrates strong product understanding, contributes meaningfully to quarterly planning, and collaborates with PMs or team leads to shape squad vision. Mentorship & Feedback: Proactively supports the growth of other engineers through mentoring, sponsorship, and constructive feedback. Cross-Team Collaboration: Frequently consulted by engineers from other squads, demonstrating the ability to tackle complex and ambiguous problems under pressure. Technology Strategy: Keeps up with emerging technology trends and contributes insights to squad-level strategic discussions.
 
-Required Qualifications:
+  This is a remote position. A remote position does not require job duties be performed within proximity of a Visa office location. Remote positions may be required to be present at a Visa office with scheduled notice. 
 
-2+ years of software engineering experience, or equivalent demonstrated through one or a combination of the following: work experience, training, military experience, education
 
-Desired Qualifications:
+Visa requires at least 3 days in office, expectations of these days will be confirmed by your Hiring Manager.
+Qualifications
 
-Experience in Software Engineering, or equivalent demonstrated through one or a combination of the following: work experience, training, military experience, education
-Hands-on experience with agentic architectures, frameworks, or platforms like LangChain, LangGraph, OpenAI Agents or similar.
-Practical experience designing, developing, or deploying agentic systems (autonomous agents, AI-powered assistants, workflow automation agents, or multi-agent frameworks.
-Demonstrated proficiency in software applications and technical processes within a technical discipline cloud, artificial intelligence, machine learning, mobile frontend development etc.
-Experience in the Cloud technologies like OpenShift /PCF etc.
-Proficiency in developing web-based applications, should have experience in UI/frontend and Server technologies (ANGULAR / React, Spring Framework, JDBC, JavaBeans).
-Experience in developing client-side UI components using Angular / React.
-Experience in developing the functionalities, enhancements, and bug fixes for application (UI/Backend) by consuming and exposing services.
-Designing, implementing, and maintaining Java services with well-designed, efficient, and test-driven code.
-Experience in Developing Restful Web services and Micro services in java by using Spring boot.
-Develop service/business layer components using Spring and EJBS.
-Should be able to design and develop MVC restful services using JAVA spring boot (MVC) with Oracle/SQL Server Database.
-Strong knowledge of Junit/TestNG, Selenium frameworks and test automation.
-Design cross platform consumption patterns, microservices, and event-driven architectures for high availability and scalability.
-Experience with Autosys similar orchestration tools.
-Working knowledge of REST APIs, Object Storage, and CI/CD pipelines
+Basic Qualifications:
+Bachelor's degree, OR 6 months to 2 years of relevant work experience
 
-Job Expectations:
+Preferred Qualifications:
+Bachelor's degree, OR 6 months to 2 years of relevant work experience
+proficiency in years of experience with Golang
+Adaptable to other languages like - Java/Groovy or JVM-related.
+Solid knowledge of AWS Services or other Cloud Players
+Knowledge of Distributed transactions and Race Conditions
+Experience/knowledge with Continuous Integration & Development and automation tools such as Jenkins, CodeFresh, ArgoCD, Artifactory, Git etc.
+Solid knowledge and understanding of Agile and Test-Driven Development
+Deep product knowledge, active in feature planning and impact analysis.
+Strong relational database design and non-relational strategy, effective data modelling.
+Experience with Financial Industry or Payments / Authorization Systems.
+Understanding of observability practices (monitoring, tracing, alerting).
 
-Involve in end -end lifecycle of Product/Application development, analyze highly complex business requirements, designs and writes technical specifications to design or redesign complex modules and applications.
-Expand digital client experiences by leveraging AI and Machine learning, and Agentic capabilities..
-leverage AI to Identify and automate remediation of recurring issues to improve operational stability.
-Utilize AI SDLC toolset like story weaver, MCP tools to support development, develop secure high quality production code.
-Develop highly complex original code and provide coding direction to junior team members
-Proficiency with Agile, DevOps practices, delivering Cloud solutions. Experience with delivering projects using Agile software development techniques.
-Advanced knowledge of object-oriented design and development (OOA/OOD) and the JAVA patterns and practices
-Must possess innovative and Out-of-box thinking while developing advanced technical solutions to business problems and grab opportunities to improve system resiliency.
-Collaborate with cross-functional teams to build scalable, high-performance cloud native solutions using Java, Python, microservices, and Autosys.
+
 
     """
 
