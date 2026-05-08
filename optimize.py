@@ -32,7 +32,7 @@ STRICT RULES:
 5. Reorder bullets within each role to lead with the most JD-relevant ones.
 6. Add any missing JD keywords into the skills section that don't fit elsewhere.
 7. The final resume must fit on a single page. You must be concise: aggressively reword, merge, or shorten points, but do not remove any original information. 
-8. Prioritize keeping the shortest bullets as one-liners. Only longer or keyword-heavy bullets may become two-liners, and never more than 3 in total.
+8. Try to keep it concise. Longer or keyword-heavy bullets may become two-liners.
 9. When rewording, merging, or adding to an existing bullet, ensure the new or modified content is contextually relevant and directly related to the original line. Only add or merge skills, technologies, or responsibilities that are similar or closely related to the original content. Do not add unrelated skills or technologies.
 10. Output must compile with pdflatex without errors.
 """
@@ -115,7 +115,6 @@ def compile_to_pdf_with_pdflatex(latex_source: str, output_name: str) -> str:
 def main():
     # Paste your job description here as a string (multi-line allowed)
     JOB_DESCRIPTION = """
-
 Job Description
 
 What You'll Do:
@@ -152,9 +151,6 @@ Deep product knowledge, active in feature planning and impact analysis.
 Strong relational database design and non-relational strategy, effective data modelling.
 Experience with Financial Industry or Payments / Authorization Systems.
 Understanding of observability practices (monitoring, tracing, alerting).
-
-
-
     """
 
     parser = argparse.ArgumentParser(description="ATS Resume Optimizer")
