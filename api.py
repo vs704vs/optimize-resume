@@ -54,14 +54,19 @@ def call_groq(api_key: str, resume: str, jd: str, system_prompt: str) -> str:
 @app.post("/optimize", response_class=PlainTextResponse)
 async def optimize(
     job_description: str = Form(..., description="Paste the job description here. This will be used to optimize your resume."),
-    systemprompt: str = Form("", description="(Optional) Override the default system prompt for resume optimization. Leave blank to use the default.")
+    systemprompt: str = Form("", description="(Optional) Override the default system prompt for resume optimization. Leave blank to use the default."),
+    resume_text: str = Form("", description="(Optional) Paste your LaTeX resume here to override the default file. Leave blank to use resume/original/resume.tex.")
 ):
     api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:
         raise HTTPException(status_code=500, detail="GROQ_API_KEY not set in environment.")
-    if not os.path.exists(RESUME_PATH):
-        raise HTTPException(status_code=404, detail=f"Resume file not found at {RESUME_PATH}")
-    resume = read_file(RESUME_PATH)
+    # Use provided resume_text if not blank, else load from file
+    if resume_text and resume_text.strip():
+        resume = resume_text
+    else:
+        if not os.path.exists(RESUME_PATH):
+            raise HTTPException(status_code=404, detail=f"Resume file not found at {RESUME_PATH}")
+        resume = read_file(RESUME_PATH)
     jd = job_description
     # Use default system prompt if blank or only whitespace
     sys_prompt = systemprompt.strip() if systemprompt and systemprompt.strip() else DEFAULT_SYSTEM_PROMPT
