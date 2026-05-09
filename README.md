@@ -3,6 +3,8 @@
 
 Generate an ATS-optimized PDF from your LaTeX resume and a job description using Groq's free LLM API and local pdflatex (MiKTeX or TeX Live).
 
+https://optimize-resume.onrender.com
+
 ---
 
 ## 1. One-Time Setup
