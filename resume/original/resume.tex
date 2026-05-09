@@ -1,0 +1,297 @@
+\documentclass[10pt, letterpaper]{article}
+
+\usepackage[
+    ignoreheadfoot,
+    top=0.75 cm,
+    bottom=0.5 cm,
+    left=1.0 cm,
+    right=1.0 cm,
+    footskip=0.0 cm
+]{geometry}
+
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[dvipsnames]{xcolor}
+\definecolor{primaryColor}{RGB}{0, 0, 0}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{amsmath}
+
+\usepackage[
+    pdftitle={Vishal Sharma},
+    pdfauthor={Vishal Sharma},
+    pdfcreator={Vishal Sharma},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref}
+
+\usepackage[pscoord]{eso-pic}
+\usepackage{calc}
+\usepackage{bookmark}
+\usepackage{lastpage}
+\usepackage{changepage}
+\usepackage{paracol}
+\usepackage{ifthen}
+\usepackage{needspace}
+\usepackage{iftex}
+
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage{charter}
+
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt}
+\pagestyle{empty}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\columnsep}{0.15cm}
+\pagenumbering{gobble}
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{-1pt}{0.25 cm}{0.25 cm}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$}
+
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0 cm + 10pt
+    ]
+}{
+    \end{itemize}
+}
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+}
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{0 cm + 0.00001 cm}{0 cm + 0.00001 cm}
+}{
+    \end{adjustwidth}
+}
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+}
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{, \fill, 4.5 cm}
+    \begin{paracol}{3}
+    {\raggedright #2} \switchcolumn
+}{
+    \switchcolumn \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+}
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+}
+
+\let\hrefWithoutArrow\href
+
+\begin{document}
+
+\newcommand{\AND}{\unskip
+    \cleaders\copy\ANDbox\hskip\wd\ANDbox
+    \ignorespaces
+}
+
+\newsavebox\ANDbox
+\sbox\ANDbox{$|$}
+
+\begin{header}
+    \fontsize{25 pt}{25 pt}\selectfont Vishal Sharma
+
+    \normalsize
+
+    \mbox{\hrefWithoutArrow{mailto:vishal.sharma11704@gmail.com}{vishal.sharma11704@gmail.com}}%
+    \kern 5 pt%
+    \AND%
+    \kern 5 pt%
+    \mbox{\hrefWithoutArrow{tel:+917091071590}{+917091071590}}%
+    \kern 5 pt%
+    \AND%
+    \kern 5 pt%
+    Bengaluru, India
+    \kern 5 pt%
+    \AND%
+    \kern 5 pt%
+    \mbox{\hrefWithoutArrow{https://vishal-sharma.framer.website/}{\underline{Portfolio}}}%
+    \kern 5 pt%
+    \AND%
+    \kern 5 pt%
+    \mbox{\hrefWithoutArrow{https://www.linkedin.com/in/vishal-sharma704}{\underline{LinkedIn}}}%
+    \kern 5 pt%
+    \AND%
+    \kern 5 pt%
+    \mbox{\hrefWithoutArrow{https://github.com/vs704vs}{\underline{Github}}}%
+    \kern 5 pt%
+    \AND%
+    \kern 5 pt%
+    \mbox{\hrefWithoutArrow{https://www.geeksforgeeks.org/profile/vs704vs?tab=activity}{\underline{GFG}}}%
+\end{header}
+
+\vspace{0.05 cm}
+
+\section{Education}
+
+\begin{twocolentry}{Nov 2020 - Jul 2024}
+\textbf{Birla Institute of Technology Mesra}, B.Tech in Electronics and Communication, GPA - 8.4
+\end{twocolentry}
+
+\vspace{0.05 cm}
+
+\begin{twocolentry}{Jul 2019 - Jul 2020}
+\textbf{Carmel Junior College}, ISC (Computer Science), Percentage - 94\%
+\end{twocolentry}
+
+\section{Experience}
+
+\begin{twocolentry}{Jun 2024 - Present}
+\href{https://www.societegenerale.com/en}{\textbf{Societe Generale}}, Software Engineer | Bengaluru, Karnataka
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+\begin{highlights}
+    \item Led Move to Cloud by integrating pod accessible storage alongwith SSAS, creating PV/PVC and shared folder mounts.
+    \item Reduced latency improve query performance by implementing DB indexing, designed endpoints in .NET and Spring Boot.
+    \item Optimized data retrieval by implementing API pagination for downstream applications.
+    \item Implemented cron jobs to schedule application downtime in non-peak hours and weekends.
+\end{highlights}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{twocolentry}{Jan 2024 - Jun 2024}
+\href{https://ente.io/}{\textbf{Ente}}, Software Engineer Intern | Bengaluru, Karnataka
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+\begin{highlights}
+    \item Built transactional and marketing email infrastructure using AWS SES, REST APIs and listmonk in Go.
+    \item Increased time on page by 14\% by categorizing and filtering MDX files using GraphQL and Gatsby.
+\end{highlights}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{twocolentry}{May 2023 – Sept 2023}
+\href{https://shootingwithstars.com/}{\textbf{Shooting With Stars}}, Web Developer Intern | Remote
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+\begin{highlights}
+    \item Integrated bcrypt, OAuth authentication, chatbot and speech recognition scaling user registration by 12\%.
+    \item Implemented stock price drop email alert using BeautifulSoup4 and smtplib, created landing pages for 8+ clients.
+\end{highlights}
+\end{onecolentry}
+
+\section{Projects}
+
+\begin{twocolentry}{
+\href{https://chromewebstore.google.com/detail/leetcode-to-gfg/idlcinljjhfgnfdcoigikeekmnackapg}{\underline{Visit}}
+}
+\textbf{LeetCode to GFG Extension} | FastAPI, JavaScript, BeautifulSoup, spaCy, Gemini
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+\begin{highlights}
+    \item Used by 200+ global users to link LeetCode problems with same/similar problems on GFG with company tags.
+    \item Title and description matching using NLP (spaCy, Gemini) on web-scraped datasets, served through a FastAPI backend.
+\end{highlights}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{twocolentry}{
+\href{https://github.com/vs704vs/data-anonymiser/tree/enc-dec}{\underline{Visit}}
+}
+\textbf{Data Anonymizer} | Deep Learning, Express.js, MongoDB, AWS S3, React, crypt
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+\begin{highlights}
+    \item Winning project of Société Générale Global Hackathon 2025. NPM Package - \underline{\href{https://www.npmjs.com/package/@sgbots/data-anonymiser}{Visit}}
+    \item Platform for detecting and encrypting Personally Identifiable Information in .parquet, .csv, .xlsx/.xlsm files.
+    \item Custom DL model using DistilBERT trained on supervised data (Presidio labelling) to classify PII/non-PII data.
+    \item S3 uploads via pre-signed URLs with per-user tracking, authentication, dashboard, and real-time notifications.
+\end{highlights}
+\end{onecolentry}
+
+\section{Skills}
+
+\begin{onecolentry}
+\textbf{Languages and Technologies:} Java, SQL, Git, REST APIs, Python, Spring Boot, .NET, React, C\#, MongoDB.
+\end{onecolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+\textbf{Core CS:} Data Structures \& Algorithms, OOP, LLD, DBMS, Operating Systems.
+\end{onecolentry}
+
+\section{Achievements}
+
+\begin{onecolentry}
+\begin{highlights}
+    \item Winner of Société Générale Global Hackathon 2025, SPOT award 2024 for innovation, finalist in LEAP YI Hackathon 2025.
+    \item 44th - GeeksForGeeks all-time Institute rank. Solved 400+ DSA problems.
+    \item 114th position out of 49,465 participants at Codegoda 2022.
+    \item Podium finishes at IIT Bombay Mood Indigo 2022, IIT BHU Kashiyatra 2023, and IIT KGP SpringFest 2021.
+\end{highlights}
+\end{onecolentry}
+
+\section{Position of Responsibility}
+
+\begin{twocolentry}{Jul 2023 - Jul 2024}
+\textbf{President} - Music Club, Birla Insitute of Technology Mesra
+\end{twocolentry}
+
+\begin{twocolentry}{Jul 2022 - Jul 2023}
+\textbf{Design Head} - News and Publications Society | \textbf{General Secretary} - Music Club, BITM
+\end{twocolentry}
+
+\end{document}
