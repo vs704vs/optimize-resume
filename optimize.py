@@ -32,7 +32,7 @@ STRICT RULES:
 5. Reorder bullets within each role to lead with the most JD-relevant ones.
 6. Add any missing JD keywords into the skills section that don't fit elsewhere.
 7. The final resume must fit on a single page. You must be concise: aggressively reword, merge, or shorten points, but do not remove any original information. 
-8. Try to keep it concise. Longer or keyword-heavy bullets may become two-liners.
+8. Try to keep it concise and mostly one-liner bullet points. Only Longer or keyword-heavy bullets may become two-liners.
 9. When rewording, merging, or adding to an existing bullet, ensure the new or modified content is contextually relevant and directly related to the original line. Only add or merge skills, technologies, or responsibilities that are similar or closely related to the original content. Do not add unrelated skills or technologies.
 10. Output must compile with pdflatex without errors.
 """
@@ -115,46 +115,55 @@ def compile_to_pdf_with_pdflatex(latex_source: str, output_name: str) -> str:
 def main():
     # Paste your job description here as a string (multi-line allowed)
     JOB_DESCRIPTION = """
-Job Description
+About the Role
 
-What You'll Do:
-
-Develop and maintain applications using Golang or Java, following clean code and best software engineering practices.
-Design and implement scalable, reliable, and secure microservices architecture.
-Collaborate with engineering and product teams to refine and deliver technical solutions aligned with business needs.
-Leverage AWS services such as SQS, SNS, DynamoDB, S3, and EventBridge in day-to-day development.
-Use Terraform to provision, maintain, and evolve AWS infrastructure.
-Write unit and integration tests to ensure code quality and system robustness.
-Monitor application health and performance using observability tools (metrics, logs, alerts).
-Participate in code reviews and provide constructive feedback to peers.
-Contribute to architectural and technical discussions, supporting continuous improvement and innovation
-High-Impact Contributions: Regularly recognized for delivering high-quality, impactful technical solutions within their team and across collectives. Coding Standards & Best Practices: Actively enables other engineers to elevate coding standards and deepen awareness of best practices, especially around non-functional requirements. Technical Leadership: Consistently leads their squad to successful technical outcomes, ensuring sound engineering decisions that balance technical debt, system design, reliability, observability, and business needs. Product Awareness & Planning: Demonstrates strong product understanding, contributes meaningfully to quarterly planning, and collaborates with PMs or team leads to shape squad vision. Mentorship & Feedback: Proactively supports the growth of other engineers through mentoring, sponsorship, and constructive feedback. Cross-Team Collaboration: Frequently consulted by engineers from other squads, demonstrating the ability to tackle complex and ambiguous problems under pressure. Technology Strategy: Keeps up with emerging technology trends and contributes insights to squad-level strategic discussions.
-
-  This is a remote position. A remote position does not require job duties be performed within proximity of a Visa office location. Remote positions may be required to be present at a Visa office with scheduled notice. 
+This role involves building and maintaining robust backend systems, solving real-world technical challenges, and optimizing performance. It requires strong foundations in clean coding practices, peer reviews, and agile development. Best suited for someone who values ownership, quality, and adaptability in a high-performance environment.
 
 
-Visa requires at least 3 days in office, expectations of these days will be confirmed by your Hiring Manager.
-Qualifications
 
-Basic Qualifications:
-Bachelor's degree, OR 6 months to 2 years of relevant work experience
+What We Expect From You
 
-Preferred Qualifications:
-Bachelor's degree, OR 6 months to 2 years of relevant work experience
-proficiency in years of experience with Golang
-Adaptable to other languages like - Java/Groovy or JVM-related.
-Solid knowledge of AWS Services or other Cloud Players
-Knowledge of Distributed transactions and Race Conditions
-Experience/knowledge with Continuous Integration & Development and automation tools such as Jenkins, CodeFresh, ArgoCD, Artifactory, Git etc.
-Solid knowledge and understanding of Agile and Test-Driven Development
-Deep product knowledge, active in feature planning and impact analysis.
-Strong relational database design and non-relational strategy, effective data modelling.
-Experience with Financial Industry or Payments / Authorization Systems.
-Understanding of observability practices (monitoring, tracing, alerting).
+
+
+Key Responsibilities
+
+Implement assigned features and changes through performant and maintainable code, with appropriate test coverage (unit, contract, component).
+Understand the design and architecture of the component/service and implement low-level designs (LLDs) following best practices.
+Perform effective code reviews for peers.
+Consider customer experience and product performance in implementation.
+Develop awareness of how your work impacts key product metrics.
+Handle on-call responsibilities effectively within the team.
+Contribute to RCA discussions and support RCA documentation.
+Proactively gather and understand requirements for assigned features.
+Ask questions, clarify uncertainties, and document requirements accurately.
+Collaborate effectively with developers in the team to implement features with quality.
+
+
+Must Haves
+
+Proficiency in at least one of the following languages: Java, Go, or Kotlin
+Solid understanding of object-oriented design, design patterns, and data structures
+Experience in implementing algorithms to solve real-world problems
+Proven track record in building and maintaining backend systems
+Ability to troubleshoot and optimize backend systems for better performance
+Learn and contribute to distributed system design under mentorship.
+Demonstrated expertise in unit testing, peer code reviews, and familiarity with agile methodologies
+Good verbal and written communication and interpersonal skills
+A history of delivering on-time with a focus on quality output
+Emphasis on observability, ensuring systems are well-monitored and maintainable
+At least 1+ years of software development experience
+
+
+Preferred Skills
+
+Familiarity with event-driven architectures and messaging systems (e.g., Kafka, RabbitMQ)
+Knowledge of security best practices for backend services and API endpoints
+Ability to quickly adapt to new and complex development environments
+Strong analytical skills with the ability to deep dive into technical challenges
     """
 
-    JOB_TITLE = "Software Engineer"  # Set your job title here
-    COMPANY_NAME = "WellsFargo"      # Set your company name here
+    JOB_TITLE = "SDE1(Backend)"  # Set your job title here
+    COMPANY_NAME = "Navi"      # Set your company name here
 
 
     parser = argparse.ArgumentParser(description="ATS Resume Optimizer")
