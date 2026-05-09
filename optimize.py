@@ -156,8 +156,9 @@ Understanding of observability practices (monitoring, tracing, alerting).
     JOB_TITLE = "Software Engineer"  # Set your job title here
     COMPANY_NAME = "WellsFargo"      # Set your company name here
 
+
     parser = argparse.ArgumentParser(description="ATS Resume Optimizer")
-    parser.add_argument("--resume", required=True,  help="Path to your resume.tex")
+    parser.add_argument("--resume", required=False, default="resume/original/resume.tex", help="Path to your resume.tex (default: resume/original/resume.tex)")
     parser.add_argument("--output", default=None, help="Output filename (without extension)")
     parser.add_argument("--key",    default=None,   help="Groq API key (or set GROQ_API_KEY env var)")
     parser.add_argument("--save-tex", action="store_true", help="Also save the intermediate .tex file")
@@ -172,9 +173,14 @@ Understanding of observability practices (monitoring, tracing, alerting).
         print("   Get a free key at: https://console.groq.com")
         sys.exit(1)
 
+
     if not os.path.exists(args.resume):
         print(f"❌ Resume file not found: {args.resume}")
         sys.exit(1)
+
+    # Ensure output directory exists
+    output_dir = "resume"
+    os.makedirs(output_dir, exist_ok=True)
 
     # ── Read inputs
     resume = read_file(args.resume)
@@ -189,14 +195,15 @@ Understanding of observability practices (monitoring, tracing, alerting).
 
     # ── Optionally save .tex
     if args.save_tex:
-        tex_out = f"Vishal_Sharma_{JOB_TITLE}_{COMPANY_NAME}.tex"
+        tex_out = os.path.join(output_dir, f"Vishal_Sharma_{JOB_TITLE}_{COMPANY_NAME}.tex")
         with open(tex_out, "w", encoding="utf-8") as f:
             f.write(optimized_latex)
         print(f"💾 Saved LaTeX to : {tex_out}")
 
     # ── Compile to PDF
     output_pdf_name = args.output or f"Vishal_Sharma_{JOB_TITLE}_{COMPANY_NAME}"
-    pdf_path = compile_to_pdf_with_pdflatex(optimized_latex, output_pdf_name)
+    output_pdf_path = os.path.join(output_dir, output_pdf_name)
+    pdf_path = compile_to_pdf_with_pdflatex(optimized_latex, output_pdf_path)
     print(f"\n🎉 Done! PDF saved to: {pdf_path}")
 if __name__ == "__main__":
     main()

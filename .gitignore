@@ -1,4 +1,5 @@
 /MiKTeX
+/resume
 .env
 __pycache__/
 *.aux
