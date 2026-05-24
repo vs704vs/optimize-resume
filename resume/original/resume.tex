@@ -4,9 +4,9 @@
     ignoreheadfoot,
     top=0.75 cm,
     bottom=0.5 cm,
-    left=1.0 cm,
-    right=1.0 cm,
-    footskip=0.0 cm
+    left=1.25 cm,
+    right=1.25 cm,
+    footskip=1.0 cm
 ]{geometry}
 
 \usepackage{titlesec}
@@ -14,6 +14,7 @@
 \usepackage{array}
 \usepackage[dvipsnames]{xcolor}
 \definecolor{primaryColor}{RGB}{0, 0, 0}
+
 \usepackage{enumitem}
 \usepackage{fontawesome5}
 \usepackage{amsmath}
@@ -67,18 +68,6 @@
         parsep=0.10 cm,
         partopsep=0pt,
         itemsep=0pt,
-        leftmargin=0 cm + 10pt
-    ]
-}{
-    \end{itemize}
-}
-
-\newenvironment{highlightsforbulletentries}{
-    \begin{itemize}[
-        topsep=0.10 cm,
-        parsep=0.10 cm,
-        partopsep=0pt,
-        itemsep=0pt,
         leftmargin=10pt
     ]
 }{
@@ -86,7 +75,7 @@
 }
 
 \newenvironment{onecolentry}{
-    \begin{adjustwidth}{0 cm + 0.00001 cm}{0 cm + 0.00001 cm}
+    \begin{adjustwidth}{0.00001 cm}{0.00001 cm}
 }{
     \end{adjustwidth}
 }
@@ -102,22 +91,15 @@
     \endonecolentry
 }
 
-\newenvironment{threecolentry}[3][]{
-    \onecolentry
-    \def\thirdColumn{#3}
-    \setcolumnwidth{, \fill, 4.5 cm}
-    \begin{paracol}{3}
-    {\raggedright #2} \switchcolumn
-}{
-    \switchcolumn \raggedleft \thirdColumn
-    \end{paracol}
-    \endonecolentry
-}
-
 \newenvironment{header}{
-    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+    \setlength{\topsep}{0pt}
+    \par
+    \kern\topsep
+    \centering
+    \linespread{1.5}
 }{
-    \par\kern\topsep
+    \par
+    \kern\topsep
 }
 
 \let\hrefWithoutArrow\href
@@ -137,31 +119,31 @@
 
     \normalsize
 
-    \mbox{\hrefWithoutArrow{mailto:vishal.sharma11704@gmail.com}{vishal.sharma11704@gmail.com}}%
-    \kern 5 pt%
-    \AND%
-    \kern 5 pt%
-    \mbox{\hrefWithoutArrow{tel:+917091071590}{+917091071590}}%
-    \kern 5 pt%
-    \AND%
-    \kern 5 pt%
+    \mbox{\hrefWithoutArrow{mailto:vishal.sharma11704@gmail.com}{vishal.sharma11704@gmail.com}}
+    \kern 5 pt
+    \AND
+    \kern 5 pt
+    \mbox{\hrefWithoutArrow{tel:+917091071590}{+917091071590}}
+    \kern 5 pt
+    \AND
+    \kern 5 pt
     Bengaluru, India
-    \kern 5 pt%
-    \AND%
-    \kern 5 pt%
-    \mbox{\hrefWithoutArrow{https://vishal-sharma.framer.website/}{\underline{Portfolio}}}%
-    \kern 5 pt%
-    \AND%
-    \kern 5 pt%
-    \mbox{\hrefWithoutArrow{https://www.linkedin.com/in/vishal-sharma704}{\underline{LinkedIn}}}%
-    \kern 5 pt%
-    \AND%
-    \kern 5 pt%
-    \mbox{\hrefWithoutArrow{https://github.com/vs704vs}{\underline{Github}}}%
-    \kern 5 pt%
-    \AND%
-    \kern 5 pt%
-    \mbox{\hrefWithoutArrow{https://www.geeksforgeeks.org/profile/vs704vs?tab=activity}{\underline{GFG}}}%
+    \kern 5 pt
+    \AND
+    \kern 5 pt
+    \mbox{\hrefWithoutArrow{https://vishal-sharma.framer.website/}{\underline{Portfolio}}}
+    \kern 5 pt
+    \AND
+    \kern 5 pt
+    \mbox{\hrefWithoutArrow{https://www.linkedin.com/in/vishal-sharma704}{\underline{LinkedIn}}}
+    \kern 5 pt
+    \AND
+    \kern 5 pt
+    \mbox{\hrefWithoutArrow{https://github.com/vs704vs}{\underline{Github}}}
+    \kern 5 pt
+    \AND
+    \kern 5 pt
+    \mbox{\hrefWithoutArrow{https://www.geeksforgeeks.org/profile/vs704vs?tab=activity}{\underline{GFG}}}
 \end{header}
 
 \vspace{0.05 cm}
@@ -188,10 +170,11 @@
 
 \begin{onecolentry}
 \begin{highlights}
-    \item Led Move to Cloud by integrating pod accessible storage alongwith SSAS, creating PV/PVC and shared folder mounts.
-    \item Reduced latency improve query performance by implementing DB indexing, designed endpoints in .NET and Spring Boot.
-    \item Optimized data retrieval by implementing API pagination for downstream applications.
-    \item Implemented cron jobs to schedule application downtime in non-peak hours and weekends.
+    \item Led Move to Cloud initiative by integrating pod-accessible storage with SSIS, creating PV/PVC and shared folder mounts.
+    \item Improved query performance and reduced latency by implementing database indexing.
+    \item Optimized downstream data retrieval by adding API pagination within MVC architecture.
+    \item Designed REST endpoints in .NET and Spring Boot, developed web pages and reusable components in React.
+    \item Automated application downtime scheduling via cron jobs during weekends, streamlined CI/CD with Jenkins.
 \end{highlights}
 \end{onecolentry}
 
@@ -224,6 +207,8 @@
     \item Implemented stock price drop email alert using BeautifulSoup4 and smtplib, created landing pages for 8+ clients.
 \end{highlights}
 \end{onecolentry}
+
+\vspace{0.2 cm}
 
 \section{Projects}
 
@@ -264,22 +249,24 @@
 \section{Skills}
 
 \begin{onecolentry}
-\textbf{Languages and Technologies:} Java, SQL, Git, REST APIs, Python, Spring Boot, .NET, React, C\#, MongoDB.
+\textbf{Languages and Technologies:} Java, SQL, Git, REST APIs, Python, Spring Boot, .NET, React, C\#, Node.js, HTML, CSS.
 \end{onecolentry}
 
 \vspace{0.10 cm}
 
 \begin{onecolentry}
-\textbf{Core CS:} Data Structures \& Algorithms, OOP, LLD, DBMS, Operating Systems.
+\textbf{Core CS:} Data Structures \& Algorithms, OOPs, LLD, Multithreading, Concurrency, DBMS, Operating Systems.
 \end{onecolentry}
 
 \section{Achievements}
 
 \begin{onecolentry}
 \begin{highlights}
-    \item Winner of Société Générale Global Hackathon 2025, SPOT award 2024 for innovation, finalist in LEAP YI Hackathon 2025.
+    \item Winner of Société Générale Global Hackathon 2025, finalist (top 5) in LEAP YI Hackathon 2025.
+    \item Winner of Societe Generale SPOT award 2024 for innovation.
     \item 44th - GeeksForGeeks all-time Institute rank. Solved 400+ DSA problems.
     \item 114th position out of 49,465 participants at Codegoda 2022.
+    \item 35th position out of 2,268 participants at Coding Velocity 2022.
     \item Podium finishes at IIT Bombay Mood Indigo 2022, IIT BHU Kashiyatra 2023, and IIT KGP SpringFest 2021.
 \end{highlights}
 \end{onecolentry}
@@ -287,7 +274,7 @@
 \section{Position of Responsibility}
 
 \begin{twocolentry}{Jul 2023 - Jul 2024}
-\textbf{President} - Music Club, Birla Insitute of Technology Mesra
+\textbf{President} - Music Club, Birla Institute of Technology Mesra
 \end{twocolentry}
 
 \begin{twocolentry}{Jul 2022 - Jul 2023}
